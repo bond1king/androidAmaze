@@ -16,7 +16,7 @@
     <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="New AutoCompleteTextView"
+        android:text="like paracetamol"
         android:id="@+id/autoCompleteTextView"
         android:layout_margin="20dp" />
 
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="Get Help"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:textSize="20dp"
         android:id="@+id/textView" />
 
@@ -40,13 +40,14 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:text="Search for specific help"
-            android:id="@+id/search_help" />
+            android:id="@+id/search_help_text" />
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:drawable="@drawable/search"/>
+            android:src="@drawable/search"
+            android:id="@+id/search_help_button" />
     </LinearLayout>
 
     <Button
