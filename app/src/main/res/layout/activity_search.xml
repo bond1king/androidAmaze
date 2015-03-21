@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="50dp"
+        android:text="Search for any medicine"
+        android:id="@+id/editText2" />
+
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="New AutoCompleteTextView"
+        android:id="@+id/autoCompleteTextView"
+        android:layout_margin="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Help"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="70dp"
+        android:textSize="20dp"
+        android:id="@+id/textView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I&apos;m feeling lucky!"
+        android:layout_marginTop="20dp"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal" />
+
+
+
+
+
+</LinearLayout>
