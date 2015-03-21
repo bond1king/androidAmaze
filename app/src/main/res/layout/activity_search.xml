@@ -4,30 +4,50 @@
     android:baselineAligned="false"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="#4655A8"
+        android:layout_weight="1">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="25dp"
+        android:textColor="#fff"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="50dp"
         android:text="Search for any medicine"
         android:id="@+id/editText2" />
 
-    <AutoCompleteTextView
+    <com.healthhelp.AutoCompleteTextViewExtended
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="like paracetamol"
+        android:layout_height="wrap_content"
+        android:hint="like paracetamol"
+        android:textColor="#000"
         android:id="@+id/autoCompleteTextView"
         android:layout_margin="20dp" />
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Get Help"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="60dp"
-        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="25dp"
         android:id="@+id/textView" />
+
+    <ViewAnimator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewAnimator"
+        android:layout_gravity="right" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,11 +62,11 @@
             android:text="Search for specific help"
             android:id="@+id/search_help_text" />
         <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:src="@drawable/search"
+            android:src="@drawable/s_icon"
             android:id="@+id/search_help_button" />
     </LinearLayout>
 
@@ -58,5 +78,5 @@
         android:id="@+id/button"
         android:layout_gravity="center_horizontal" />
 
-
+    </LinearLayout>
 </LinearLayout>
