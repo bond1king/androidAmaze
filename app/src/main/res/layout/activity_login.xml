@@ -8,6 +8,19 @@
     tools:context="com.healthhelp.LoginActivity">
 
     <!-- Login progress -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HealthHelp Login Here"
+        android:id="@+id/Welcome_text"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ff00000b"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="40dp"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textAlignment="center" />
+
     <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginBottom="8dp" android:visibility="gone" />
@@ -16,7 +29,8 @@
         android:layout_height="match_parent">
 
         <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:orientation="vertical">
+            android:layout_height="wrap_content" android:orientation="vertical"
+            android:weightSum="1">
 
             <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:hint="@string/prompt_email"
@@ -30,10 +44,21 @@
                 android:imeOptions="actionUnspecified" android:inputType="textPassword"
                 android:maxLines="1" android:singleLine="true" />
 
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="147dp"
+                android:layout_height="wrap_content"
+                android:text="New User? Sign In Here"
+                android:id="@+id/register"
+                android:layout_marginLeft="190dp"
+                android:layout_marginTop="20dp" />
+
             <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                android:layout_width="174dp" android:layout_height="wrap_content"
+                android:layout_marginTop="-50dp" android:text="@string/action_sign_in"
+                android:textStyle="bold"
+                android:layout_weight="2.05"
+                android:textSize="#FF000000dp" />
 
         </LinearLayout>
     </ScrollView>

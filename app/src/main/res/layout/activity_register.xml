@@ -2,56 +2,106 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:visibility="visible"
+    android:textAlignment="center">
+
 
     <TextView
-        android:layout_width="271dp"
+        android:layout_width="363dp"
         android:layout_height="wrap_content"
         android:text="New User Registration"
         android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07"
         android:textAlignment="center"
-        android:textColor="red"
-        android:textSize="25dp" />
+        android:textColor="#ff010101"
+        android:textSize="25dp"
+        android:layout_weight="0.08"
+        android:layout_margin="20dp">
+    </TextView>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/email"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07"
-        android:editable="true"
-        android:enabled="true"
-        android:text="EmailID" />
+        android:hint="EmailId" />
+
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
-        android:id="@+id/name"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/password"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07"
-        android:text="password"
-        android:password="false" />
+        android:layout_weight="0.08"
+        android:hint="password" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/phone"
+        android:hint="PhoneNumber"
+        android:phoneNumber="true" >
+
+    </EditText>
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Name"
+        android:hint="Full Name" />
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Disease"
+        android:hint="Disease" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07"
-        android:text="PhoneNumber"
-        android:phoneNumber="true" />
+        android:layout_weight="0.09"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sex"
+            android:id="@+id/textView3"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_margin="5dp" />
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male"
+            android:id="@+id/Male" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female"
+            android:id="@+id/Female" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SignIn"
+        android:id="@+id/SignIn"
+        android:textStyle="bold"
+        android:visibility="visible"
+        android:layout_gravity="center_horizontal" />
+
 
 </LinearLayout>

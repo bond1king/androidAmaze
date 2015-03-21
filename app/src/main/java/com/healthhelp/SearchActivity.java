@@ -1,6 +1,7 @@
 package com.healthhelp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -39,6 +41,9 @@ public class SearchActivity extends Activity {
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int arg2, long arg3) {
                 //TODO REMOVE AFTER HANDLING THE INPUT
+                Intent intent = new Intent(SearchActivity.this, MedicineDetailsAndAlternatives.class);
+                intent.putExtra("itemName", ((TextView)arg1).getText().toString() );
+                startActivity(intent);
                 autoCompleteTextView.setText("");
                 //TODO Nadeem
 
@@ -65,13 +70,7 @@ public class SearchActivity extends Activity {
             public void afterTextChanged(Editable s) {
 
             }
-
-
         });
-
-
-
-
     }
 
 
