@@ -9,6 +9,7 @@ import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -27,6 +28,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,11 +59,25 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private Button registerButton;
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        pref = getSharedPreferences("MyPref",0);
+        registerButton =(Button)findViewById(R.id.register);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -291,6 +310,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         private final String mEmail;
         private final String mPassword;
 
+
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
@@ -299,23 +319,33 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
+            Connection conn;
 
             try {
                 // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                Class.forName("com.mysql.jdbc.Driver");
+                conn = DriverManager.getConnection("jdbc:mysql://sql3.freemysqlhosting.net/sql371289", "sql371289", "xE4!vH2!");
+                Statement stmt = conn.createStatement();
+                String sql="select id, email from user where email='"+mEmail+"' and password='"+mPassword+"'";
+                boolean success = stmt.execute(sql);
+                ResultSet rs = stmt.getResultSet();
+
+                if(rs.next()){
+                       SharedPreferences.Editor editor =  pref.edit();
+                        editor.putBoolean("loggedIn",true);
+                        editor.putInt("userId", rs.getInt(1));
+                        editor.putString("email", mEmail);
+                        editor.commit();
+
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
             // TODO: register the new account here.
+
             return true;
         }
 

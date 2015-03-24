@@ -1,10 +1,12 @@
 package com.healthhelp;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 /**
@@ -23,7 +25,12 @@ public class DBAsyncTask extends AsyncTask<String, Void, Boolean> {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://sql3.freemysqlhosting.net/sql371289", "sql371289", "xE4!vH2!");
             Statement stmt = conn.createStatement();
-            boolean success = stmt.execute(sql);
+            boolean success = stmt.execute(sql, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = stmt.getResultSet();
+            int autoIncKeyFromApi;
+            if(rs.next()){
+               autoIncKeyFromApi = rs.getInt(1);
+            }
             conn.close();
             return success;
         } catch (Exception e) {

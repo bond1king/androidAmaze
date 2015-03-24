@@ -1,6 +1,9 @@
 package com.healthhelp;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,6 +16,7 @@ import com.google.android.gms.common.SignInButton;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 /**
@@ -49,7 +53,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     .append(name.getText().toString()).append("',")
                     .append(phoneNo.getText().toString()).append(")");
             System.out.println(sql.toString());
-            new DBAsyncTask().execute(sql.toString());
+            new DBAsyncTask().execute(sql.toString(),"Registration");
 
         }else{
             System.out.println("Validation failed");
@@ -78,4 +82,45 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
 
         return false;
     }
+
+
+    private class DBAsyncTask extends AsyncTask<String, Void, Boolean> {
+
+        private Connection conn;
+
+        protected Boolean doInBackground(String... inputs) {
+            try {
+                System.out.println("EXECUTING BACKGROUND TASKS");
+                String sql = inputs[0];
+                System.out.println(sql);
+                Class.forName("com.mysql.jdbc.Driver");
+                conn = DriverManager.getConnection("jdbc:mysql://sql3.freemysqlhosting.net/sql371289", "sql371289", "xE4!vH2!");
+                Statement stmt = conn.createStatement();
+                boolean success = stmt.execute(sql);
+                ResultSet rs = stmt.getResultSet();
+                int autoIncKeyFromApi;
+                if (rs.next()) {
+                    autoIncKeyFromApi = rs.getInt(1);
+                    SharedPreferences pref = RegisterActivity.this.getSharedPreferences("MyPref", 0);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putInt("id", autoIncKeyFromApi);
+                    editor.putBoolean("loggedIn", true);
+                    editor.commit();
+                }
+                conn.close();
+                Intent i= new Intent(RegisterActivity.this, SearchActivity.class);
+                startActivity(i);
+                RegisterActivity.this.finish();
+                return success;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        protected void onPostExecute() {
+
+        }
+    }
+
 }

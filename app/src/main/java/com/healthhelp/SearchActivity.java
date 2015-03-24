@@ -2,50 +2,59 @@ package com.healthhelp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnKeyListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import java.net.URLEncoder;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 
 /**
  * Created by bhargavsarvepalli on 21/03/15.
  */
-public class SearchActivity extends Activity {
+public class SearchActivity extends Activity implements View.OnClickListener {
     String [] recommendations;
     AsyncHttpClient asyncHttpClient;
     private AutoCompleteTextViewExtended autoCompleteTextView;
+    SharedPreferences pref;
+    Button lucky;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        System.out.println(" AutoComplete here");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         autoCompleteTextView = (AutoCompleteTextViewExtended) findViewById(R.id.autoCompleteTextView);
         asyncHttpClient = AsyncHttpClientUtils.getCommonAsyncHTTPClient();
+        pref = this.getSharedPreferences("MyPref",0);
+        lucky = (Button)findViewById(R.id.lucky);
+        lucky.setOnClickListener(this);
 
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int arg2, long arg3) {
-                //TODO REMOVE AFTER HANDLING THE INPUT
+
+                autoCompleteTextView.setText("");
                 Intent intent = new Intent(SearchActivity.this, MedicineDetailsAndAlternatives.class);
                 intent.putExtra("itemName", ((TextView)arg1).getText().toString() );
                 startActivity(intent);
-                autoCompleteTextView.setText("");
-                //TODO Nadeem
 
             } });
 
@@ -75,7 +84,12 @@ public class SearchActivity extends Activity {
 
 
             public void getRecommendations(String id) {
-                String url = "http://www.truemd.in/api/typeahead.json?id=" + id + "&key=yash6992&limit=5";
+                String url=null;
+                try {
+                    url = "http://www.truemd.in/api/typeahead.json?id=" + URLEncoder.encode(id, "UTF-8") + "&key=yash6992&limit=5";
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
                 asyncHttpClient.get(url, new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(String response) {
@@ -101,4 +115,75 @@ public class SearchActivity extends Activity {
             }
 
 
+    @Override
+    public void onClick(View v) {
+        int userId = pref.getInt("id",-1);
+        String email = pref.getString("email", null);
+        String medicine = pref.getString("lastSearched",null);
+        //String insertQuery = "insert into interaction (userId, medicine) values ('"+userId+"','"+ medicine +"')";
+        String selectQuery = "SELECT user.Name, user.phoneNo, user.email FROM user, interaction WHERE interaction.userId = user.id AND user.email <> '" + email +"' ";
+        if(medicine!=null && medicine.equals("null")) {
+            selectQuery += " AND interaction.medicine = '" + medicine + "'";
         }
+        switch (v.getId()){
+            case R.id.lucky :{
+                    new DBAsyncTask().execute(selectQuery, "select");
+                break;
+            }
+            case R.id.search_help_button:{
+             //      new com.healthhelp.DBAsyncTask().execute(insertQuery,"insert");
+                break;
+            }
+
+        }
+
+    }
+
+
+    private class DBAsyncTask extends AsyncTask<String, Void, Boolean> {
+
+        private Exception exception;
+        private Connection conn;
+
+        protected Boolean doInBackground(String... inputs) {
+            try {
+                System.out.println("EXECUTING BACKGROUND TASKS");
+                String sql = inputs[0];
+                System.out.println(sql);
+                Class.forName("com.mysql.jdbc.Driver");
+                conn = DriverManager.getConnection("jdbc:mysql://sql3.freemysqlhosting.net/sql371289", "sql371289", "xE4!vH2!");
+                Statement stmt = conn.createStatement();
+                stmt.execute(inputs[0]);
+                ResultSet rs = stmt.getResultSet();
+                ArrayList names = new ArrayList();
+                ArrayList phones = new ArrayList();
+                ArrayList emails = new ArrayList();
+                System.out.println("Hell0" );
+                if (rs != null) {
+                    while (rs.next()) {
+                        names.add(rs.getString(1));
+                        phones.add(rs.getString(2));
+                        emails.add(rs.getString(3));
+                    }
+                    Intent i = new Intent(SearchActivity.this, ContactMessage.class);
+                    i.putStringArrayListExtra("names", names);
+                    i.putStringArrayListExtra("phones", phones);
+                    i.putStringArrayListExtra("emails", emails);
+                    startActivity(i);
+
+                }
+                conn.close();
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                this.exception = e;
+                return false;
+            }
+        }
+
+        protected void onPostExecute() {
+
+        }
+
+    }
+}

@@ -11,11 +11,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HealthHelp Login Here"
+        android:text="HealthHelp"
         android:id="@+id/Welcome_text"
         android:layout_gravity="center_horizontal"
         android:textColor="#ff00000b"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginBottom="40dp"
         android:textStyle="bold"
         android:textSize="30dp"
@@ -25,40 +25,47 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginBottom="8dp" android:visibility="gone" />
 
-    <ScrollView android:id="@+id/login_form" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ScrollView android:id="@+id/login_form" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp">
 
         <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:orientation="vertical"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:gravity="center_vertical">
 
             <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:hint="@string/prompt_email"
+                android:layout_height="0dp" android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress" android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:layout_weight="0.25" />
 
             <EditText android:id="@+id/password" android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:hint="@string/prompt_password"
+                android:layout_height="0dp" android:hint="@string/prompt_password"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified" android:inputType="textPassword"
-                android:maxLines="1" android:singleLine="true" />
+                android:maxLines="1" android:singleLine="true"
+                android:layout_weight="0.25" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="147dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="New User? Sign In Here"
                 android:id="@+id/register"
                 android:layout_marginLeft="190dp"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="20dp"
+                android:layout_weight="0.25" />
 
             <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
-                android:layout_width="174dp" android:layout_height="wrap_content"
+                android:layout_width="174dp" android:layout_height="0dp"
                 android:layout_marginTop="-50dp" android:text="@string/action_sign_in"
                 android:textStyle="bold"
-                android:layout_weight="2.05"
-                android:textSize="#FF000000dp" />
+                android:layout_weight="0.25"
+                android:textSize="15dp"
+                android:textColor="#ff020405" />
 
         </LinearLayout>
     </ScrollView>
